@@ -135,3 +135,10 @@ dmypy.json
 .vscode/
 ## vim
 *.sw?
+l2/
+LaMa_test_images/
+big-lama/
+outputs/
+test_small/
+output/
+big-lama.zip

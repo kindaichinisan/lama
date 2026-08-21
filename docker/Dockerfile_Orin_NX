@@ -1,0 +1,52 @@
+# Use the NVIDIA Jetson PyTorch image that you already verified works.
+# Replace this with the exact image you are currently using if different.
+FROM dustynv/pytorch:2.7-r36.4.0-cu128-24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# ------------------------------------------------------------
+# System dependencies
+# ------------------------------------------------------------
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libxcb1 \
+    git \
+    wget \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# ------------------------------------------------------------
+# Python dependencies
+# ------------------------------------------------------------
+RUN python3 -m pip install --no-cache-dir \
+    --index-url https://pypi.org/simple \
+    pyyaml \
+    tqdm \
+    easydict \
+    joblib \
+    matplotlib \
+    pandas \
+    tabulate \
+    packaging \
+    webdataset \
+    scikit-learn \
+    scikit-image \
+    opencv-python-headless \
+    hydra-core
+
+# These are needed by LaMa
+RUN python3 -m pip install --no-cache-dir \
+    --index-url https://pypi.org/simple \
+    albumentations \
+    kornia \
+    pytorch-lightning
+
+WORKDIR /workspace/lama
+
+ENV PYTHONPATH=/workspace/lama
+
+CMD ["/bin/bash"]
