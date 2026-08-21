@@ -56,9 +56,23 @@ RAM 15451 / 15656 MB
 SWAP 7822 / 7828 MB
 
 Using a small image like 512x512 can work.
+python3 - <<'PY'
+import cv2
+
+img = cv2.imread('/workspace/lama/LaMa_test_images/000068.png')
+mask = cv2.imread('/workspace/lama/LaMa_test_images/000068_mask.png', cv2.IMREAD_GRAYSCALE)
+
+img = cv2.resize(img, (512, 512))
+mask = cv2.resize(mask, (512, 512), interpolation=cv2.INTER_NEAREST)
+
+cv2.imwrite('/workspace/lama/test_small/000068.png', img)
+cv2.imwrite('/workspace/lama/test_small/000068_mask.png', mask)
+PY
 
 ## 5.6 folder created by container cannot be modified by host PC
-docker run --rm -it --runtime nvidia --network host --user $(id -u):$(id -g) -v ~/WJ_git/lama:/workspace/lama lama:jetson
+If the Docker container creates files/folders that the host user cannot modify, it is usually because the container is running as root, so the files are owned by root on the host.  
+For your LaMa setup, the best solution is to run the container with the same UID/GID as your host user.  
+`docker run --rm -it --runtime nvidia --network host --user $(id -u):$(id -g) -v ~/WJ_git/lama:/workspace/lama lama:jetson`
 
 # 6 To run
 python3 bin/predict.py     model.path=$(pwd)/big-lama     indir=$(pwd)/LaMa_test_images    outdir=$(pwd)/output

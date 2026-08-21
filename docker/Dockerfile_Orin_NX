@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
 # ------------------------------------------------------------
 RUN python3 -m pip install --no-cache-dir \
     --index-url https://pypi.org/simple \
+    numpy==1.26.4 \
+    scipy==1.11.4 \
     pyyaml \
     tqdm \
     easydict \
@@ -38,10 +40,12 @@ RUN python3 -m pip install --no-cache-dir \
     opencv-python-headless \
     hydra-core
 
-# These are needed by LaMa
+# ------------------------------------------------------------
+# LaMa dependencies
+# ------------------------------------------------------------
 RUN python3 -m pip install --no-cache-dir \
     --index-url https://pypi.org/simple \
-    albumentations \
+    albumentations==0.5.2 \
     kornia \
     pytorch-lightning
 
