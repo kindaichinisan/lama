@@ -77,6 +77,9 @@ For your LaMa setup, the best solution is to run the container with the same UID
 # 6 To run
 python3 bin/predict.py     model.path=$(pwd)/big-lama     indir=$(pwd)/LaMa_test_images    outdir=$(pwd)/output
 
+# 6b To run in windows
+docker run --rm -it --gpus all -v "D:\WJ_git\lama:/workspace/lama" lama  
+
 # 7 download data
 ❗️❗️❗️ All yandex dist links went bad, you can download the model from the google drive ❗️❗️❗️
 LaMa_test_images: https://drive.google.com/drive/folders/1B2x7eQDgecTL0oh3LSIBDGj0fTxs6Ips

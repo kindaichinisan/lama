@@ -1,4 +1,5 @@
-FROM nvidia/cuda:10.2-runtime-ubuntu18.04
+# FROM nvidia/cuda:10.2-runtime-ubuntu18.04
+FROM nvidia/cuda:12.6.3-runtime-ubuntu22.04
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -18,13 +19,13 @@ WORKDIR "/home/$USERNAME"
 ENV PATH="/home/$USERNAME/miniconda3/bin:/home/$USERNAME/.local/bin:${PATH}"
 ENV PYTHONPATH="/home/$USERNAME/project"
 
-RUN wget -O /tmp/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh && \
-    echo "536817d1b14cb1ada88900f5be51ce0a5e042bae178b5550e62f61e223deae7c /tmp/miniconda.sh" > /tmp/miniconda.sh.sha256 && \
-    sha256sum --check --status < /tmp/miniconda.sh.sha256 && \
-    bash /tmp/miniconda.sh -bt -p "/home/$USERNAME/miniconda3" && \
-    rm /tmp/miniconda.sh && \
-    conda build purge && \
-    conda init
+# RUN wget -O /tmp/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh && \
+#     echo "536817d1b14cb1ada88900f5be51ce0a5e042bae178b5550e62f61e223deae7c /tmp/miniconda.sh" > /tmp/miniconda.sh.sha256 && \
+#     sha256sum --check --status < /tmp/miniconda.sh.sha256 && \
+#     bash /tmp/miniconda.sh -bt -p "/home/$USERNAME/miniconda3" && \
+#     rm /tmp/miniconda.sh && \
+#     conda build purge && \
+#     conda init
 
 RUN pip install -U pip
 RUN pip install numpy scipy torch==1.8.1 torchvision opencv-python tensorflow joblib matplotlib pandas \
